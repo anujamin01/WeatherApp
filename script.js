@@ -30,6 +30,7 @@ let weather = {
   },
 };
 
+
 document.querySelector(".search button").addEventListener("click", function(){
   weather.search();
 });
@@ -41,4 +42,18 @@ document.querySelector(".searchbar")
   }
 });
 
-weather.fetchWeather("Madison");
+let current = {
+  getCurrent: function(){
+    fetch(
+      "http://www.geoplugin.net/json.gp"
+    ).then((results) => results.json())
+    .then((data) => this.getCurrentHelper(data));
+  },
+  
+  getCurrentHelper: function(data){
+    //console.log(data.geoplugin_city);
+    weather.fetchWeather(data.geoplugin_city);
+  }
+  
+};
+current.getCurrent();
